@@ -1,0 +1,23 @@
+{
+  "root": "libs/dudi-ui",
+  "sourceRoot": "libs/dudi-ui/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/dudi-ui/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/dudi-ui"],
+      "options": {
+        "jestConfig": "libs/dudi-ui/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  }
+}
