@@ -3,6 +3,8 @@ import NxWelcome from './nx-welcome';
 // import Button from '../atoms/button';
 import { DudiUi } from '@dudi/dudi-ui';
 import { Button } from '../atoms/button';
+import { ReactTable } from '../organisms/reactTable';
+
 export function App() {
   return (
     <>
@@ -14,7 +16,8 @@ export function App() {
       >
         Default
       </Button>
-      <DudiUi />
+      {/* <DudiUi /> */}
+      <ReactTable />
     </>
   );
 }
