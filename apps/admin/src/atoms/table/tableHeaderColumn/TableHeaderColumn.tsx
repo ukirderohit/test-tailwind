@@ -9,6 +9,7 @@ interface TableHeaderColumnProps {
 const TableHeaderColumn: FunctionComponent<TableHeaderColumnProps> = ({
   children,
   className,
+  ...rest
 }) => {
   return (
     <th
@@ -17,6 +18,7 @@ const TableHeaderColumn: FunctionComponent<TableHeaderColumnProps> = ({
         'px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider',
         className
       )}
+      {...rest}
     >
       {children}
     </th>

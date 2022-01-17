@@ -9,9 +9,10 @@ interface TableBodyProps {
 const TableBody: FunctionComponent<TableBodyProps> = ({
   children,
   className,
+  ...rest
 }) => {
   return (
-    <tbody className={clsx('bg-white divide-y divide-gray-200', className)}>
+    <tbody className={clsx('bg-white divide-y divide-gray-200', className)} {...rest}>
       {children}
     </tbody>
   );

@@ -9,9 +9,13 @@ interface TableBodyColumnProps {
 const TableBodyColumn: FunctionComponent<TableBodyColumnProps> = ({
   children,
   className,
+  ...rest
 }) => {
   return (
-    <td className={clsx('px-6 py-4 whitespace-nowrap text-sm', className)}>
+    <td
+      className={clsx('px-6 py-4 whitespace-nowrap text-sm', className)}
+      {...rest}
+    >
       {children}
     </td>
   );
