@@ -1,8 +1,23 @@
-import { FunctionComponent } from 'react';
+import { FunctionComponent, useState } from 'react';
 import { SearchIcon } from '@heroicons/react/outline';
+interface SearchInputProps {
+  preGlobalFilteredRows: any;
+  globalFilter: any;
+  setGlobalFilter: any;
+}
 
-const SearchInput: FunctionComponent = () => {
-  // TODO: Support filtering
+const SearchInput: FunctionComponent<SearchInputProps> = ({
+  preGlobalFilteredRows,
+  globalFilter,
+  setGlobalFilter,
+}) => {
+  
+  const count = preGlobalFilteredRows.length;
+  const [value, setValue] = useState(globalFilter);
+  const onChange = (value: string) => {
+    setGlobalFilter(value || undefined);
+  };
+
   return (
     <div>
       <div className="mt-1 flex rounded-md shadow-sm">
@@ -11,11 +26,13 @@ const SearchInput: FunctionComponent = () => {
             <SearchIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
           </div>
           <input
-            type="email"
-            name="email"
-            id="email"
+            value={value || ''}
+            onChange={(e) => {
+              setValue(e.target.value);
+              onChange(e.target.value);
+            }}
             className="focus:ring-indigo-500 focus:border-indigo-500 block w-full rounded-l-md pl-10 sm:text-sm border border-r-0 border-gray-300 bg-gray-50 "
-            placeholder="John Doe"
+            placeholder={`${count} records...`}
           />
         </div>
       </div>

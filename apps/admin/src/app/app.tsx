@@ -1,76 +1,50 @@
-import React from 'react';
-
 import { Button } from '../atoms/button';
-import { ReactTable } from '../organisms/reactTable';
+import { Table } from '../molecules/table';
+import { useEffect, useState } from 'react';
+import { getData, columns, formatRowData, ExampleDataList } from './data';
+
+type PageResultList = {
+  rowData?: ExampleDataList | undefined;
+  isLoading: boolean;
+  totalPages: number;
+  totalPassengers: number;
+};
 
 export function App() {
-  const columns = React.useMemo(
-    () => [
-      {
-        Header: 'Name',
-        accessor: 'name',
-      },
-      {
-        Header: 'Title',
-        accessor: 'title',
-      },
-      {
-        Header: 'Role',
-        accessor: 'role',
-      },
-      {
-        Header: 'Email',
-        accessor: 'email',
-      },
-      {
-        id: 'edit',
-        accessor: 'email',
-        Cell: () => <button>Edit</button>,
-      },
-    ],
-    []
-  );
+  const [pageData, setPageData] = useState<PageResultList>({
+    rowData: [],
+    isLoading: false,
+    totalPages: 0,
+    totalPassengers: 150,
+  });
+  const [currentPage, setCurrentPage] = useState(1);
 
-  const data = React.useMemo(
-    () => [
-      {
-        id: 1,
-        name: 'Jane Cooper',
-        title: 'Regional Paradigm Technician',
-        role: 'Admin',
-        email: 'jane.cooper@example.com',
-      },
-      {
-        id: 2,
-        name: 'Jane Cooper',
-        title: 'Regional Paradigm Technician',
-        role: 'Admin',
-        email: 'jane.cooper@example.com',
-      },
-      {
-        id: 3,
-        name: 'Jane Cooper',
-        title: 'Regional Paradigm Technician',
-        role: 'Admin',
-        email: 'jane.cooper@example.com',
-      },
-    ],
-    []
-  );
+  useEffect(() => {
+    setPageData((prevState) => ({
+      ...prevState,
+      rowData: [],
+      isLoading: true,
+    }));
+    getData(currentPage).then((info) => {
+      const { totalPages, totalPassengers, data } = info;
+      setPageData({
+        isLoading: false,
+        rowData: formatRowData(data),
+        totalPages,
+        totalPassengers: 150,
+      });
+    });
+  }, [currentPage]);
 
   return (
-    <>
-      <h1 className="text-3xl font-bold underline">Hello world!</h1>
-      <Button
-        onClick={() => alert('Button 1 is clicked !')}
-        variant="primary"
-        size="sm"
-      >
-        Default
-      </Button>
-      {/* <DudiUi /> */}
-      <ReactTable columns={columns} data={data} />
-    </>
+    <Table
+      columns={columns}
+      data={pageData.rowData}
+      loading={pageData.isLoading}
+      totalRows={pageData.totalPassengers}
+      pageChangeHandler={setCurrentPage}
+      rowsPerPage={10}
+    />
   );
 }
 

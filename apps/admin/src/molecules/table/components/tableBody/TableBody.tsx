@@ -12,7 +12,10 @@ const TableBody: FunctionComponent<TableBodyProps> = ({
   ...rest
 }) => {
   return (
-    <tbody className={clsx('bg-white divide-y divide-gray-200', className)} {...rest}>
+    <tbody
+      className={clsx('bg-white divide-y divide-gray-200', className)}
+      {...rest}
+    >
       {children}
     </tbody>
   );
